@@ -1,18 +1,19 @@
-import React from "react";
-import { Button } from "react-bootstrap";
+import React, { useContext } from "react";
+import { Button, Card } from "react-bootstrap";
+import { myContext } from "./Context";
 export default function Products(props) {
-  const { productId, sellingPrice, productName } = props.data;
-  const delete_product = props.deleteProduct;
+  const { addProductToCart } = useContext(myContext);
+  const { id, title, price, imageUrl } = props.data;
   return (
-    <tr>
-      <td> {productId}</td>
-      <td>{productName}</td>
-      <td>{sellingPrice}</td>
-      <td>
-        <Button variant="secondary" onClick={() => delete_product(productId)}>
-          Delete
+    <Card style={{ width: "18rem" }}>
+      <Card.Img variant="top" src={imageUrl} />
+      <Card.Body>
+        <Card.Title>{title}</Card.Title>
+        <Card.Text>{price}</Card.Text>
+        <Button variant="primary" onClick={() => addProductToCart(id)}>
+          Add To Cart
         </Button>
-      </td>
-    </tr>
+      </Card.Body>
+    </Card>
   );
 }
