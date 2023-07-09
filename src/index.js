@@ -5,13 +5,19 @@ import App from "./App";
 import "../node_modules/react-bootstrap/dist/react-bootstrap.min";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import { ContextDataProvider } from "./Context";
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import About from "./About";
 // this is the ecommerce project
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <ContextDataProvider>
-    <App />;
-  </ContextDataProvider>
+  <BrowserRouter>
+    <ContextDataProvider>
+      <Routes>
+        <Route path="/" element={<App />}></Route>
+        <Route path="/about" element={<About />}></Route>
+      </Routes>
+    </ContextDataProvider>
+  </BrowserRouter>
 );
 
 /* <Form>

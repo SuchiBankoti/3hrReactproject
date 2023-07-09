@@ -54,10 +54,18 @@ function ContextDataProvider(props) {
 
   function addProductToCart(id) {
     const newCartItem = products.find((item) => item.id === id);
-    setCartItems((prev) => [...prev, newCartItem]);
+    if (!cartItems.find((item) => item.id === id)) {
+      setCartItems((prev) => [...prev, newCartItem]);
+    } else {
+      alert("Product already added to the cart");
+    }
   }
   function removeProductFromCart(id) {
     setCartItems((prev) => prev.filter((item) => item.id !== id));
+  }
+  function clearCart() {
+    setCartItems([]);
+    alert("Thankyou for your purchase");
   }
   return (
     <myContext.Provider
@@ -68,6 +76,7 @@ function ContextDataProvider(props) {
         removeProductFromCart,
         showCart,
         setShowCart,
+        clearCart,
       }}
     >
       {props.children}

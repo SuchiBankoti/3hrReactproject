@@ -1,15 +1,19 @@
 import React, { useContext } from "react";
 import { myContext } from "./Context";
-import { Badge, Table } from "react-bootstrap";
+import { Badge, Button, Table } from "react-bootstrap";
 import CartItem from "./CartItem";
 
 export default function Cart() {
-  const { cartItems, removeProductFromCart } = useContext(myContext);
+  const { cartItems, removeProductFromCart, clearCart, setShowCart } =
+    useContext(myContext);
 
   return (
     <div className="cart">
+      <h1 className="closecart" onClick={() => setShowCart(false)}>
+        &times;
+      </h1>
       <h2>Cart</h2>
-      <Table>
+      <Table style={{ margin: "1rem" }}>
         <thead>
           <tr>
             <th>Item</th>
@@ -36,6 +40,9 @@ export default function Cart() {
           </Badge>
         </h1>
       </div>
+      <Button variant="primary" onClick={clearCart}>
+        Purchase
+      </Button>
     </div>
   );
 }

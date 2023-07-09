@@ -1,32 +1,16 @@
 import React, { useContext } from "react";
 import Products from "./Products";
 import "./App.css";
-import { Button, Navbar, Badge } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { myContext } from "./Context";
-import MainCart from "./MainCart";
+import NavBar from "./Navbar";
 
 function App() {
-  const { cartItems, products, addProductToCart, showCart, setShowCart } =
-    useContext(myContext);
+  const { products, addProductToCart, setShowCart } = useContext(myContext);
 
   return (
     <div className="App">
-      <Navbar bg="dark" expand="sm" variant="dark">
-        <Navbar bg="dark" expand="sm" variant="dark">
-          <Navbar.Brand>Home</Navbar.Brand>
-          <Navbar.Brand>Store</Navbar.Brand>
-          <Navbar.Brand>About</Navbar.Brand>
-        </Navbar>
-        <Navbar>
-          <Button
-            variant="primary"
-            onClick={() => setShowCart((prev) => !prev)}
-          >
-            Cart<Badge variant="light">{cartItems.length}</Badge>
-          </Button>
-          {showCart ? <MainCart /> : ""}
-        </Navbar>
-      </Navbar>
+      <NavBar />
       <div>
         <h2>Products</h2>
         <div className="allProductsContainer">
@@ -34,7 +18,9 @@ function App() {
             <Products data={obj} key={i} addProductToCart={addProductToCart} />
           ))}
         </div>
-        <Button variant="primary">Go To Cart</Button>
+        <Button variant="primary" onClick={() => setShowCart(true)}>
+          See The Cart
+        </Button>
       </div>
     </div>
   );
