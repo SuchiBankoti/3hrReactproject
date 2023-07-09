@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import Products from "./Products";
 import "./App.css";
+import { Button, Navbar, Form, Table, Badge } from "react-bootstrap";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -28,52 +29,72 @@ function App() {
   }
   return (
     <div className="App">
-      <form>
-        <label>
-          Product ID
-          <input
-            type="number"
-            name="productId"
-            value={formdata.productId}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Selling price
-          <input
-            type="number"
-            name="sellingPrice"
-            value={formdata.sellingPrice}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Product name
-          <input
-            type="text"
-            name="productName"
-            value={formdata.productName}
-            onChange={handleChange}
-          />
-        </label>
-      </form>
-      <button onClick={addProducts}>Add Product</button>
+      <Navbar bg="dark" expand="sm" variant="dark">
+        <Navbar.Brand>My Products</Navbar.Brand>
+      </Navbar>
+      <Form>
+        <Form.Group controlId="formProductID">
+          <Form.Label>
+            Product ID
+            <Form.Control
+              type="number"
+              name="productId"
+              value={formdata.productId}
+              onChange={handleChange}
+            />
+          </Form.Label>
+        </Form.Group>
+        <Form.Group controlId="formSellingPrice">
+          <Form.Label>
+            Selling price
+            <Form.Control
+              type="number"
+              name="sellingPrice"
+              value={formdata.sellingPrice}
+              onChange={handleChange}
+            />
+          </Form.Label>
+        </Form.Group>
+        <Form.Group controlId="formProductName">
+          <Form.Label>
+            Product name
+            <Form.Control
+              type="text"
+              name="productName"
+              value={formdata.productName}
+              onChange={handleChange}
+            />
+          </Form.Label>
+        </Form.Group>
+      </Form>
+      <Button variant="primary" onClick={addProducts}>
+        Add Products
+      </Button>
       <div>
         <h2>Products</h2>
-        <ul className="displayContainer">
-          {products.map((obj, i) => (
-            <Products data={obj} key={i} deleteProduct={deleteProduct} />
-          ))}
-        </ul>
-        <div>
-          <h3>Total Value of Products</h3>
-          <div>
+        <Table className="displayContainer">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Product Name</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.map((obj, i) => (
+              <Products data={obj} key={i} deleteProduct={deleteProduct} />
+            ))}
+          </tbody>
+        </Table>
+        <Button variant="dark">
+          Total Value Of Products
+          <Badge>
             {products.reduce(
               (sum, obj) => (sum += Number(obj.sellingPrice)),
               0
             )}
-          </div>
-        </div>
+          </Badge>
+        </Button>
       </div>
     </div>
   );
