@@ -7,13 +7,30 @@ export default function CartItem(props) {
   return (
     <tr>
       <td>
-        <Card style={{ width: "5rem", height: "5rem", display: "flex" }}>
-          <Card.Img variant="top" src={imageUrl} />
-          <Card.Body>
-            <Card.Title>{title}</Card.Title>
-          </Card.Body>
+        <Card
+          style={{
+            width: "25rem",
+            height: "6rem",
+            border: "1px solid black",
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Card.Img
+            variant="top"
+            src={imageUrl}
+            style={{ width: "5rem", height: "5rem", margin: "0.5rem" }}
+          />
+          <Card.Title
+            style={{ width: "10rem", height: "3rem", margin: "0.5rem" }}
+          >
+            {title}
+          </Card.Title>
         </Card>
       </td>
+
       <td>{price}</td>
       <td>{quantity}</td>
       <td>

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { myContext } from "./Context";
-import { Table } from "react-bootstrap";
+import { Badge, Table } from "react-bootstrap";
 import CartItem from "./CartItem";
 
 export default function Cart() {
@@ -27,6 +27,15 @@ export default function Cart() {
           ))}
         </tbody>
       </Table>
+      <div>
+        <h1>
+          Total{" "}
+          <Badge>
+            {" "}
+            ${cartItems.reduce((sum, item) => (sum += Number(item.price)), 0)}
+          </Badge>
+        </h1>
+      </div>
     </div>
   );
 }
