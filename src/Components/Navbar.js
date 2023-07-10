@@ -17,6 +17,7 @@ export default function NavBar() {
           display: "flex",
           justifyContent: "space-around",
         }}
+        className="nav"
       >
         <NavLink to="/home" className="active">
           Home
@@ -26,6 +27,9 @@ export default function NavBar() {
         </NavLink>
         <NavLink to="/about" className="active">
           About
+        </NavLink>
+        <NavLink to="/contact" className="active">
+          Contact Us
         </NavLink>
         <Navbar>
           <Button

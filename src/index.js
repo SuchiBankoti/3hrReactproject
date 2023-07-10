@@ -8,6 +8,8 @@ import { ContextDataProvider } from "./Context";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import About from "./Components/About";
 import Home from "./Components/Home";
+import Contact from "./Components/Contact";
+import ProductDetail from "./Components/ProductDetails";
 // this is the ecommerce project
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -17,44 +19,9 @@ root.render(
         <Route path="/" element={<App />}></Route>
         <Route path="/about" element={<About />}></Route>
         <Route path="/home" element={<Home />}></Route>
+        <Route path="/contact" element={<Contact />}></Route>
+        <Route path="/productdetail/:id" element={<ProductDetail />}></Route>
       </Routes>
     </ContextDataProvider>
   </BrowserRouter>
 );
-
-/* <Form>
-<Form.Group controlId="formProductID">
-  <Form.Label>
-    Product ID
-    <Form.Control
-      type="number"
-      name="productId"
-      value={formdata.productId}
-      onChange={handleChange}
-    />
-  </Form.Label>
-</Form.Group>
-<Form.Group controlId="formSellingPrice">
-  <Form.Label>
-    Selling price
-    <Form.Control
-      type="number"
-      name="sellingPrice"
-      value={formdata.sellingPrice}
-      onChange={handleChange}
-    />
-  </Form.Label>
-</Form.Group>
-<Form.Group controlId="formProductName">
-  <Form.Label>
-    Product name
-    <Form.Control
-      type="text"
-      name="productName"
-      value={formdata.productName}
-      onChange={handleChange}
-    />
-  </Form.Label>
-</Form.Group>
-</Form> */
-// https://www.youtube.com/watch?v=469qFU9nfqE

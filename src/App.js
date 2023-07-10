@@ -8,16 +8,23 @@ import Footer from "./Components/Footer";
 
 function App() {
   const { products, addProductToCart, setShowCart } = useContext(myContext);
-
   return (
     <div className="App">
       <NavBar />
       <div>
         <h2>Products</h2>
         <div className="allProductsContainer">
-          {products.map((obj, i) => (
-            <Products data={obj} key={i} addProductToCart={addProductToCart} />
-          ))}
+          {products.length > 0 ? (
+            products.map((obj, i) => (
+              <Products
+                data={obj}
+                key={i}
+                addProductToCart={addProductToCart}
+              />
+            ))
+          ) : (
+            <h1>Loading...</h1>
+          )}
         </div>
         <Button variant="primary" onClick={() => setShowCart(true)}>
           See The Cart

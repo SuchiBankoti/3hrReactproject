@@ -1,99 +1,61 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useState, useEffect, useMemo } from "react";
 
 const myContext = createContext();
 
-const allProducts = [
-  {
-    id: 1,
-    title: "Colors",
-    price: 100,
-    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%201.png",
-    quantity: 2,
-  },
-  {
-    id: 2,
-    title: "Black and white Colors",
-    price: 50,
-    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%202.png",
-    quantity: 3,
-  },
-  {
-    id: 3,
-    title: "Yellow and Black Colors",
-    price: 70,
-    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%203.png",
-    quantity: 1,
-  },
-  {
-    id: 4,
-    title: "Colors",
-    price: 100,
-    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%201.png",
-    quantity: 2,
-  },
-  {
-    id: 5,
-    title: "Black and white Colors",
-    price: 50,
-    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%202.png",
-    quantity: 3,
-  },
-  {
-    id: 6,
-    title: "Yellow and Black Colors",
-    price: 70,
-    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%203.png",
-    quantity: 1,
-  },
-];
-const toursData = [
-  {
-    date: "Jul16",
-    location: "DETROIT, MI",
-    venue: "DTE ENERGY MUSIC THEATRE",
-  },
-  {
-    date: "Jul19",
-    location: "TORONTO,ON",
-    venue: "BUDWEISER STAGE",
-  },
-  {
-    date: "Jul21",
-    location: "BRISTOW, VA",
-    venue: "JIGGY LUBE LIVE",
-  },
-
-  {
-    date: "Jul24",
-    location: " PHOENIX, AZ",
-    venue: "AK-CHIN PAVILION",
-  },
-  {
-    date: "Jul27",
-    location: "LAS VEGAS, NV",
-    venue: "T-MOBILE ARENA",
-  },
-  {
-    date: "Jul29",
-    location: "CONCORD, CA",
-    venue: "CONCORD PAVILION",
-  },
-];
 function ContextDataProvider(props) {
-  const [products, setProducts] = useState(allProducts);
+  const api =
+    "https://ecommerce-sharp-default-rtdb.asia-southeast1.firebasedatabase.app";
+  const arr = useMemo(
+    () => [
+      "-NZzGvR4r9rDKZhho6RA",
+      "-NZzHHoGpU4elzv3ikYv",
+      "-NZzel-kOXYFhNWLYQz9",
+    ],
+    []
+  );
+  const [allProductsKey, toursDataKey, customerContactDataKey] = arr;
+  const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
-  const [tours, setTours] = useState(toursData);
+  const [tours, setTours] = useState([]);
   const [showCart, setShowCart] = useState(false);
-
+  const [allContacts, setAllContacts] = useState([]);
   useEffect(() => {
-    async function getMovies() {
-      const response = await fetch("https://swapi.dev/api/films/");
-      const data = await response.json();
-      console.log(data.results);
+    async function getData() {
+      getAllProductsData();
+      getAllToursData();
+      getAllContactsData();
     }
-    getMovies();
-  }, []);
+    getData();
+  }, [api, arr]);
 
+  async function getAllProductsData() {
+    const allproductResponse = await fetch(
+      `${api}/data/${allProductsKey}.json`
+    );
+    const result = await allproductResponse.json();
+    const a = Object.entries(result);
+    const allproductData = a.map((e) => {
+      return e[1];
+    });
+    setProducts(allproductData);
+  }
+  async function getAllToursData() {
+    const alltoursResponse = await fetch(`${api}/data/${toursDataKey}.json`);
+    const result = await alltoursResponse.json();
+    const a = Object.entries(result);
+    const alltoursData = a.map((e) => {
+      return e[1];
+    });
+    setTours(alltoursData);
+  }
+  async function getAllContactsData() {
+    const allContactsResponse = await fetch(
+      `${api}/data/${customerContactDataKey}.json`
+    );
+    const result = await allContactsResponse.json();
+    const allContactsData = Object.values(result);
+    setAllContacts(allContactsData);
+  }
   function addProductToCart(id) {
     const newCartItem = products.find((item) => item.id === id);
     if (!cartItems.find((item) => item.id === id)) {
@@ -109,6 +71,15 @@ function ContextDataProvider(props) {
     setCartItems([]);
     alert("Thankyou for your purchase");
   }
+  async function postCustomerContact(contact) {
+    await fetch(`${api}/data/${customerContactDataKey}.json`, {
+      method: "POST",
+      body: JSON.stringify(contact),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
   return (
     <myContext.Provider
       value={{
@@ -120,6 +91,12 @@ function ContextDataProvider(props) {
         setShowCart,
         clearCart,
         tours,
+        api,
+        arr,
+        setProducts,
+        setTours,
+        allContacts,
+        postCustomerContact,
       }}
     >
       {props.children}

@@ -18,8 +18,8 @@
   width: 900px;
   height: 100vh;
   position: absolute;
-  top: 2rem;
-  left: 5rem;
+  top: 5rem;
+  left: -50rem;
   z-index: 1;
   padding: 1rem;
 }
@@ -65,8 +65,8 @@
   align-items: center;
 }
 .content > h1 {
-  width: 150px;
-  height: 55px;
+  width: 250px;
+  height: fit-content;
   margin-top: 0.5rem;
   margin-bottom: 2rem;
   border: 1px solid #77c9ee;
