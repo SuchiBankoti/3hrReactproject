@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 
 const myContext = createContext();
 
@@ -84,6 +84,15 @@ function ContextDataProvider(props) {
   const [cartItems, setCartItems] = useState([]);
   const [tours, setTours] = useState(toursData);
   const [showCart, setShowCart] = useState(false);
+
+  useEffect(() => {
+    async function getMovies() {
+      const response = await fetch("https://swapi.dev/api/films/");
+      const data = await response.json();
+      console.log(data.results);
+    }
+    getMovies();
+  }, []);
 
   function addProductToCart(id) {
     const newCartItem = products.find((item) => item.id === id);

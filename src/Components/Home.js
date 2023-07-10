@@ -3,7 +3,6 @@ import NavBar from "./Navbar";
 import Generics from "./Generics";
 import { myContext } from "../Context";
 import { Button } from "react-bootstrap";
-import { Background } from "reactflow";
 import Footer from "./Footer";
 
 export default function Home() {
@@ -33,7 +32,9 @@ export default function Home() {
                 <span>{album.date}</span>
                 <span>{album.location}</span>
                 <span>{album.venue}</span>
-                <Button variant="secondary">Buy Tickets</Button>
+                <Button variant="secondary" style={{ width: "12rem" }}>
+                  Buy Tickets
+                </Button>
               </div>
             );
           })}

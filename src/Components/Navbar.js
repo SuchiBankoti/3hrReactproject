@@ -18,11 +18,13 @@ export default function NavBar() {
           justifyContent: "space-around",
         }}
       >
-        <NavLink to="/home" activeClassName="active">
+        <NavLink to="/home" className="active">
           Home
         </NavLink>
-        <NavLink to="/">Store</NavLink>
-        <NavLink to="/about" activeClassName="active">
+        <NavLink to="/" className="active">
+          Store
+        </NavLink>
+        <NavLink to="/about" className="active">
           About
         </NavLink>
         <Navbar>
