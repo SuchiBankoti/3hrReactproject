@@ -1,6 +1,7 @@
 import React from "react";
 import NavBar from "./Navbar";
 import { Card } from "react-bootstrap";
+import Footer from "./Footer";
 export default function About() {
   return (
     <div>
@@ -51,6 +52,7 @@ export default function About() {
           </Card.Text>
         </Card.Body>
       </Card>
+      <Footer />
     </div>
   );
 }

@@ -29,3 +29,56 @@
   top: 0;
   cursor: pointer;
 }
+.genericBar {
+  height: 120px;
+  width: 100%;
+  font-size: 3rem;
+  text-align: center;
+  padding: 2rem;
+  color: white;
+  margin-bottom: 1rem;
+}
+.header {
+  background-color: #777777;
+}
+.albumsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.album {
+  width: 60rem;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  margin: 0.2rem;
+  padding: 0.2rem;
+  border-bottom: 1px solid #777777;
+}
+.album > span {
+  margin-right: 2rem;
+  width: 200px;
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.content > h1 {
+  width: 150px;
+  height: 55px;
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
+  border: 1px solid #77c9ee;
+  text-align: center;
+}
+.footer {
+  height: 120px;
+  width: 100%;
+  background-color: #77c9ee;
+  font-size: 3rem;
+  text-align: center;
+  padding: 2rem;
+  color: white;
+  margin-top: 1rem;
+}

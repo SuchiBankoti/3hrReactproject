@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { myContext } from "./Context";
+import { myContext } from "../Context";
 import { Badge, Button, Table } from "react-bootstrap";
 import CartItem from "./CartItem";
 

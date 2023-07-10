@@ -6,7 +6,8 @@ import "../node_modules/react-bootstrap/dist/react-bootstrap.min";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import { ContextDataProvider } from "./Context";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import About from "./About";
+import About from "./Components/About";
+import Home from "./Components/Home";
 // this is the ecommerce project
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -15,6 +16,7 @@ root.render(
       <Routes>
         <Route path="/" element={<App />}></Route>
         <Route path="/about" element={<About />}></Route>
+        <Route path="/home" element={<Home />}></Route>
       </Routes>
     </ContextDataProvider>
   </BrowserRouter>
@@ -55,3 +57,4 @@ root.render(
   </Form.Label>
 </Form.Group>
 </Form> */
+// https://www.youtube.com/watch?v=469qFU9nfqE

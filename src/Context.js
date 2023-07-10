@@ -46,10 +46,43 @@ const allProducts = [
     quantity: 1,
   },
 ];
+const toursData = [
+  {
+    date: "Jul16",
+    location: "DETROIT, MI",
+    venue: "DTE ENERGY MUSIC THEATRE",
+  },
+  {
+    date: "Jul19",
+    location: "TORONTO,ON",
+    venue: "BUDWEISER STAGE",
+  },
+  {
+    date: "Jul21",
+    location: "BRISTOW, VA",
+    venue: "JIGGY LUBE LIVE",
+  },
 
+  {
+    date: "Jul24",
+    location: " PHOENIX, AZ",
+    venue: "AK-CHIN PAVILION",
+  },
+  {
+    date: "Jul27",
+    location: "LAS VEGAS, NV",
+    venue: "T-MOBILE ARENA",
+  },
+  {
+    date: "Jul29",
+    location: "CONCORD, CA",
+    venue: "CONCORD PAVILION",
+  },
+];
 function ContextDataProvider(props) {
   const [products, setProducts] = useState(allProducts);
   const [cartItems, setCartItems] = useState([]);
+  const [tours, setTours] = useState(toursData);
   const [showCart, setShowCart] = useState(false);
 
   function addProductToCart(id) {
@@ -77,6 +110,7 @@ function ContextDataProvider(props) {
         showCart,
         setShowCart,
         clearCart,
+        tours,
       }}
     >
       {props.children}

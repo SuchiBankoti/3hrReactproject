@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Button, Card } from "react-bootstrap";
-import { myContext } from "./Context";
+import { myContext } from "../Context";
 export default function Products(props) {
   const { addProductToCart } = useContext(myContext);
   const { id, title, price, imageUrl } = props.data;

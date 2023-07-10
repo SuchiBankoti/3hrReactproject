@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
-import Products from "./Products";
+import Products from "./Components/Products";
 import "./App.css";
 import { Button } from "react-bootstrap";
 import { myContext } from "./Context";
-import NavBar from "./Navbar";
+import NavBar from "./Components/Navbar";
+import Footer from "./Components/Footer";
 
 function App() {
   const { products, addProductToCart, setShowCart } = useContext(myContext);
@@ -22,6 +23,7 @@ function App() {
           See The Cart
         </Button>
       </div>
+      <Footer />
     </div>
   );
 }
