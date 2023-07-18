@@ -5,7 +5,7 @@ import { myContext } from "../Context";
 import { Navbar, Button, Badge } from "react-bootstrap";
 
 export default function NavBar() {
-  const { showCart, setShowCart, cartItems } = useContext(myContext);
+  const { showCart, setShowCart, cartItems, token } = useContext(myContext);
   return (
     <>
       <Navbar
@@ -19,18 +19,27 @@ export default function NavBar() {
         }}
         className="nav"
       >
-        <NavLink to="/home" className="active">
+        <NavLink to="/3hrreactproject/home" className="active-link">
           Home
         </NavLink>
-        <NavLink to="/" className="active">
+        <NavLink to="/3hrreactproject/" className="active-link">
           Store
         </NavLink>
-        <NavLink to="/about" className="active">
+        <NavLink to="/3hrreactproject/about" className="active-link">
           About
         </NavLink>
-        <NavLink to="/contact" className="active">
+        <NavLink to="/3hrreactproject/contact" className="active-link">
           Contact Us
         </NavLink>
+        {token ? (
+          <NavLink to="/3hrreactproject/account" className="active-link">
+            Account
+          </NavLink>
+        ) : (
+          <NavLink to="/3hrreactproject/auth" className="active-link">
+            LogIn
+          </NavLink>
+        )}
         <Navbar>
           <Button
             variant="primary"

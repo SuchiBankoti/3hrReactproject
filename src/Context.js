@@ -19,6 +19,7 @@ function ContextDataProvider(props) {
   const [tours, setTours] = useState([]);
   const [showCart, setShowCart] = useState(false);
   const [allContacts, setAllContacts] = useState([]);
+  const [token, setToken] = useState(getFromLocStr);
   useEffect(() => {
     async function getData() {
       getAllProductsData();
@@ -80,6 +81,19 @@ function ContextDataProvider(props) {
       },
     });
   }
+  function saveToLocStr(token) {
+    localStorage.setItem("token", token);
+    const t = localStorage.getItem("token");
+    setToken(t);
+  }
+  function getFromLocStr() {
+    const t = localStorage.getItem("token");
+    return t;
+  }
+  function removeFromLocStr() {
+    localStorage.removeItem("token");
+    setToken("");
+  }
   return (
     <myContext.Provider
       value={{
@@ -97,6 +111,9 @@ function ContextDataProvider(props) {
         setTours,
         allContacts,
         postCustomerContact,
+        token,
+        saveToLocStr,
+        removeFromLocStr,
       }}
     >
       {props.children}

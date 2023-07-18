@@ -5,7 +5,6 @@ import { Link, NavLink } from "react-router-dom";
 export default function Products(props) {
   const { addProductToCart } = useContext(myContext);
   const { id, title, price, imageUrl } = props.data;
-  console.log(props.data);
   return (
     <Card style={{ width: "18rem" }}>
       <Card.Img variant="top" src={imageUrl} />
@@ -16,7 +15,9 @@ export default function Products(props) {
           Add To Cart
         </Button>
       </Card.Body>
-      <NavLink to={`/productdetail/${id}`}>Product Details</NavLink>
+      <NavLink to={`/3hrreactproject/productdetail/${id}`}>
+        Product Details
+      </NavLink>
     </Card>
   );
 }
