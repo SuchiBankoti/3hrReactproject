@@ -1,38 +1,36 @@
 import React, { useContext } from "react";
-import Products from "./Components/Products";
-import "./App.css";
-import { Button } from "react-bootstrap";
+import "./index.css";
+import "../node_modules/react-bootstrap/dist/react-bootstrap.min";
+import "../node_modules/bootstrap/dist/css/bootstrap.css";
+import { Routes, Route, Navigate } from "react-router-dom";
+import About from "./Components/About";
+import Home from "./Components/Home";
+import Contact from "./Components/Contact";
+import ProductDetail from "./Components/ProductDetails";
+import AuthForm from "./Components/Authorization/AuthForm";
+import Account from "./Components/Authorization/Account";
+import Main from "./Main";
 import { myContext } from "./Context";
-import NavBar from "./Components/Navbar";
-import Footer from "./Components/Footer";
 
-function App() {
-  const { products, addProductToCart, setShowCart } = useContext(myContext);
+export default function App() {
+  const { token } = useContext(myContext);
   return (
-    <div className="App">
-      <NavBar />
-      <div>
-        <h2>Products</h2>
-        <div className="allProductsContainer">
-          {products.length > 0 ? (
-            products.map((obj, i) => (
-              <Products
-                data={obj}
-                key={i}
-                addProductToCart={addProductToCart}
-              />
-            ))
-          ) : (
-            <h1>Loading...</h1>
-          )}
-        </div>
-        <Button variant="primary" onClick={() => setShowCart(true)}>
-          See The Cart
-        </Button>
-      </div>
-      <Footer />
-    </div>
+    <Routes>
+      <Route
+        path="/3hrreactproject/"
+        element={
+          token ? <Main /> : <Navigate replace to="/3hrreactproject/auth" />
+        }
+      ></Route>
+      <Route path="/3hrreactproject/about" element={<About />}></Route>
+      <Route path="/3hrreactproject/home" element={<Home />}></Route>
+      <Route path="/3hrreactproject/contact" element={<Contact />}></Route>
+      <Route
+        path="/3hrreactproject/productdetail/:id"
+        element={<ProductDetail />}
+      ></Route>
+      <Route path="/3hrreactproject/auth" element={<AuthForm />}></Route>
+      <Route path="/3hrreactproject/account" element={<Account />}></Route>
+    </Routes>
   );
 }
-
-export default App;

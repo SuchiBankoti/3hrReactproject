@@ -1,6 +1,7 @@
-import { useContext, useRef, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { useContext, useRef } from "react";
+import { NavLink } from "react-router-dom";
 import { myContext } from "../../Context";
+import { Button, Form } from "react-bootstrap";
 const signINapi = process.env.REACT_APP_SIGN_IN_API_KEY;
 const AuthForm = () => {
   const { saveToLocStr } = useContext(myContext);
@@ -38,19 +39,27 @@ const AuthForm = () => {
     });
   }
   return (
-    <section>
-      <form>
-        <label>Email</label>
-        <input type="email" ref={emailInputRef}></input>
-        <label>Password</label>
-        <input type="password" ref={passwordInputRef}></input>
-      </form>
-      <button onClick={handleSubmit}>
-        <NavLink to="/3hrreactproject/" className="active-link">
-          {" "}
+    <section className="auth">
+      <h1>Login</h1>
+      <Form>
+        <Form.Group controlId="formBasicEmail" className="control">
+          <Form.Label className="label">Email</Form.Label>
+          <input type="email" ref={emailInputRef} placeholder="Email"></input>
+        </Form.Group>
+        <Form.Group controlId="formBasicPassword" className="control">
+          <Form.Label className="label">Password</Form.Label>
+          <input
+            type="password"
+            ref={passwordInputRef}
+            placeholder="Password"
+          ></input>
+        </Form.Group>
+      </Form>
+      <Button onClick={handleSubmit} variant="primary">
+        <NavLink to="/3hrreactproject/home" className="active-link">
           Login
         </NavLink>
-      </button>
+      </Button>
     </section>
   );
 };
