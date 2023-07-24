@@ -5,6 +5,7 @@ const myContext = createContext();
 function ContextDataProvider(props) {
   const api =
     "https://ecommerce-sharp-default-rtdb.asia-southeast1.firebasedatabase.app";
+
   const arr = useMemo(
     () => [
       "-NZzGvR4r9rDKZhho6RA",
@@ -20,6 +21,8 @@ function ContextDataProvider(props) {
   const [showCart, setShowCart] = useState(false);
   const [allContacts, setAllContacts] = useState([]);
   const [token, setToken] = useState(getFromLocStr);
+  const [userMail, setuserMail] = useState("");
+
   useEffect(() => {
     async function getData() {
       getAllProductsData();
@@ -94,6 +97,7 @@ function ContextDataProvider(props) {
     localStorage.removeItem("token");
     setToken("");
   }
+
   return (
     <myContext.Provider
       value={{
@@ -114,6 +118,8 @@ function ContextDataProvider(props) {
         token,
         saveToLocStr,
         removeFromLocStr,
+        userMail,
+        setuserMail,
       }}
     >
       {props.children}

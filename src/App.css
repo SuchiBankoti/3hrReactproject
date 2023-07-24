@@ -122,3 +122,18 @@
   text-align: left;
   padding: 0.25rem;
 }
+.crousel-container {
+  width: 500px;
+  height: 500px;
+}
+.product-detail {
+  margin: auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 600px;
+  width: 900px;
+}
+Button {
+  margin: 1rem;
+}

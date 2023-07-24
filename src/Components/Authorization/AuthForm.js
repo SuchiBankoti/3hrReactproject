@@ -1,10 +1,12 @@
-import { useContext, useRef } from "react";
+import { useContext, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { myContext } from "../../Context";
 import { Button, Form } from "react-bootstrap";
 const signINapi = process.env.REACT_APP_SIGN_IN_API_KEY;
+const signUPapi = process.env.REACT_APP_SIGN_UP_API_KEY;
 const AuthForm = () => {
-  const { saveToLocStr } = useContext(myContext);
+  const { saveToLocStr, setuserMail, removeFromLocStr } = useContext(myContext);
+  const [IsNewUser, setIsNewUser] = useState(false);
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
 
@@ -12,35 +14,73 @@ const AuthForm = () => {
     event.preventDefault();
     const email = emailInputRef.current.value;
     const password = passwordInputRef.current.value;
-    fetch(signINapi, {
-      method: "POST",
-      body: JSON.stringify({
-        email: email,
-        password: password,
-        returnSecureToken: true,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => {
-      if (res.ok) {
-        res.json().then((data) => {
-          saveToLocStr(data.idToken);
-        });
-      } else {
-        res.json().then((data) => {
-          let errMsg = "Authentication Failed";
-          if (data && data.error && data.error.message) {
-            errMsg = data.error.message;
-          }
-          alert(errMsg);
-        });
-      }
-    });
+    if (!IsNewUser) {
+      fetch(signINapi, {
+        method: "POST",
+        body: JSON.stringify({
+          email: email,
+          password: password,
+          returnSecureToken: true,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((res) => {
+        if (res.ok) {
+          res.json().then((data) => {
+            saveToLocStr(data.idToken);
+            setuserMail(data.email);
+            setIsNewUser(false);
+            // saveUserId// fetch req post for cart and orders and save id from res data
+          });
+        } else {
+          res.json().then((data) => {
+            let errMsg = "Authentication Failed";
+            if (data && data.error && data.error.message) {
+              errMsg = data.error.message;
+            }
+            alert(errMsg);
+          });
+        }
+      });
+    } else {
+      fetch(signUPapi, {
+        method: "POST",
+        body: JSON.stringify({
+          email: email,
+          password: password,
+          returnSecureToken: true,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((res) => {
+        if (res.ok) {
+          res.json().then((data) => {
+            saveToLocStr(data.idToken);
+            setuserMail(data.email);
+          });
+          alert(
+            "ACCOUNT CREATED, you will be logged out automatically in 5 minutes"
+          );
+          setTimeout(() => {
+            removeFromLocStr();
+          }, 300000);
+        } else {
+          return res.json().then((data) => {
+            let errMsg = "Authenticaton Failed";
+            if (data && data.error && data.error.message) {
+              errMsg = data.error.message;
+            }
+            alert(errMsg);
+          });
+        }
+      });
+    }
   }
   return (
     <section className="auth">
-      <h1>Login</h1>
+      {IsNewUser ? <h1>Create Account</h1> : <h1>Login</h1>}
       <Form>
         <Form.Group controlId="formBasicEmail" className="control">
           <Form.Label className="label">Email</Form.Label>
@@ -55,11 +95,25 @@ const AuthForm = () => {
           ></input>
         </Form.Group>
       </Form>
-      <Button onClick={handleSubmit} variant="primary">
-        <NavLink to="/3hrreactproject/home" className="active-link">
-          Login
-        </NavLink>
-      </Button>
+      {!IsNewUser ? (
+        <>
+          <Button onClick={handleSubmit} variant="primary">
+            <NavLink to="/3hrreactproject/home" className="active-link">
+              Login
+            </NavLink>
+          </Button>
+          <Button>
+            <p>New here</p>
+            <b onClick={() => setIsNewUser(true)}>Create Account</b>
+          </Button>
+        </>
+      ) : (
+        <Button onClick={handleSubmit} variant="primary">
+          <NavLink to="/3hrreactproject/home" className="active-link">
+            Sign Up
+          </NavLink>
+        </Button>
+      )}
     </section>
   );
 };
