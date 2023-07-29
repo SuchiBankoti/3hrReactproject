@@ -1,27 +1,25 @@
-import React, { createContext, useState, useEffect, useMemo } from "react";
+import React, { createContext, useState, useEffect } from "react";
 
 const myContext = createContext();
 
 function ContextDataProvider(props) {
   const api =
     "https://ecommerce-sharp-default-rtdb.asia-southeast1.firebasedatabase.app";
-
-  const arr = useMemo(
-    () => [
-      "-NZzGvR4r9rDKZhho6RA",
-      "-NZzHHoGpU4elzv3ikYv",
-      "-NZzel-kOXYFhNWLYQz9",
-    ],
-    []
-  );
-  const [allProductsKey, toursDataKey, customerContactDataKey] = arr;
+  const allProductsKey = process.env.REACT_APP_ALL_PRODUCTS_KEY;
+  const toursDataKey = process.env.REACT_APP_TOURS_DATA_KEY;
+  const customerContactDataKey =
+    process.env.REACT_APP_CUSTOMER_CONTACT_DATA_KEY;
+  const allUsersApi = process.env.REACT_APP_ALL_USERS_KEY;
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [tours, setTours] = useState([]);
   const [showCart, setShowCart] = useState(false);
   const [allContacts, setAllContacts] = useState([]);
   const [token, setToken] = useState(getFromLocStr);
-  const [userMail, setuserMail] = useState("");
+  const [userAccount, setUserAccount] = useState({});
+  const [userAccountKey, setUserAccountKey] = useState(
+    localStorage.getItem("userAccountKey")
+  );
 
   useEffect(() => {
     async function getData() {
@@ -30,7 +28,27 @@ function ContextDataProvider(props) {
       getAllContactsData();
     }
     getData();
-  }, [api, arr]);
+  }, []);
+
+  useEffect(() => {
+    async function getUserAccount() {
+      if (token && userAccountKey) {
+        const res = await fetch(
+          `${api}/data/${allUsersApi}/${userAccountKey}.json`
+        );
+        const accountData = await res.json();
+        console.log(accountData);
+        if (accountData.cart) {
+          console.log("cart exists");
+          console.log(accountData.cart);
+          const temp = accountData.cart;
+          setCartItems(temp);
+        }
+        setUserAccount(accountData);
+      }
+    }
+    getUserAccount();
+  }, [token, userAccountKey]);
 
   async function getAllProductsData() {
     const allproductResponse = await fetch(
@@ -60,6 +78,7 @@ function ContextDataProvider(props) {
     const allContactsData = Object.values(result);
     setAllContacts(allContactsData);
   }
+
   function addProductToCart(id) {
     const newCartItem = products.find((item) => item.id === id);
     if (!cartItems.find((item) => item.id === id)) {
@@ -95,9 +114,73 @@ function ContextDataProvider(props) {
   }
   function removeFromLocStr() {
     localStorage.removeItem("token");
+    localStorage.removeItem("userAccountKey");
     setToken("");
+    setUserAccountKey("");
+    setCartItems([]);
   }
 
+  useEffect(() => {
+    async function addCartItemTodataBase() {
+      if (cartItems.length > 0) {
+        console.log(cartItems);
+        console.log("add items to base");
+        const res = await fetch(
+          `${api}/data/${allUsersApi}/${userAccountKey}.json`,
+          {
+            method: "PATCH",
+            body: JSON.stringify({
+              cart: cartItems,
+            }),
+            headers: {
+              "Content-type": "application/json",
+            },
+          }
+        );
+        const data = await res.json();
+        console.log(data);
+        setUserAccount((prev) => {
+          return {
+            ...prev,
+            ...data,
+          };
+        });
+      }
+    }
+    addCartItemTodataBase();
+  }, [cartItems]);
+
+  async function createNewUserAccountKey(emailId) {
+    const res = await fetch(`${api}/data/${allUsersApi}.json`, {
+      method: "POST",
+      body: JSON.stringify({
+        email: emailId,
+        cart: [],
+        orders: [],
+      }),
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+    const key = await res.json();
+    console.log(key);
+    localStorage.setItem("userAccountKey", key.name);
+    setUserAccountKey(key.name);
+  }
+  async function getUserAccountKey(emailId) {
+    const res = await fetch(`${api}/data/${allUsersApi}.json`);
+    const allUsers = await res.json();
+    const tempKey = getIDfromuserObj(allUsers, emailId);
+    localStorage.setItem("userAccountKey", tempKey);
+    setUserAccountKey(tempKey);
+    function getIDfromuserObj(obj, userId) {
+      for (const key in obj) {
+        if (obj[key].email === userId) {
+          return key;
+        }
+      }
+    }
+  }
   return (
     <myContext.Provider
       value={{
@@ -109,8 +192,6 @@ function ContextDataProvider(props) {
         setShowCart,
         clearCart,
         tours,
-        api,
-        arr,
         setProducts,
         setTours,
         allContacts,
@@ -118,8 +199,11 @@ function ContextDataProvider(props) {
         token,
         saveToLocStr,
         removeFromLocStr,
-        userMail,
-        setuserMail,
+        getUserAccountKey,
+        createNewUserAccountKey,
+        userAccount,
+        setUserAccount,
+        userAccountKey,
       }}
     >
       {props.children}

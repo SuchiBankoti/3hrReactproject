@@ -5,7 +5,12 @@ import { Button, Form } from "react-bootstrap";
 const signINapi = process.env.REACT_APP_SIGN_IN_API_KEY;
 const signUPapi = process.env.REACT_APP_SIGN_UP_API_KEY;
 const AuthForm = () => {
-  const { saveToLocStr, setuserMail, removeFromLocStr } = useContext(myContext);
+  const {
+    saveToLocStr,
+    getUserAccountKey,
+    removeFromLocStr,
+    createNewUserAccountKey,
+  } = useContext(myContext);
   const [IsNewUser, setIsNewUser] = useState(false);
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
@@ -29,9 +34,8 @@ const AuthForm = () => {
         if (res.ok) {
           res.json().then((data) => {
             saveToLocStr(data.idToken);
-            setuserMail(data.email);
+            getUserAccountKey(data.email);
             setIsNewUser(false);
-            // saveUserId// fetch req post for cart and orders and save id from res data
           });
         } else {
           res.json().then((data) => {
@@ -58,7 +62,7 @@ const AuthForm = () => {
         if (res.ok) {
           res.json().then((data) => {
             saveToLocStr(data.idToken);
-            setuserMail(data.email);
+            createNewUserAccountKey(data.email);
           });
           alert(
             "ACCOUNT CREATED, you will be logged out automatically in 5 minutes"

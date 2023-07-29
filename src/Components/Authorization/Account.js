@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { myContext } from "../../Context";
 import { NavLink } from "react-router-dom";
 import { Form, Button, ListGroup } from "react-bootstrap";
@@ -6,9 +6,9 @@ import NavBar from "../Navbar";
 
 const Account = () => {
   const passwordResetApi = process.env.REACT_APP_CHANGE_PASS_API_KEY;
-  const { removeFromLocStr, token, saveToLocStr, userMail } =
+  const { removeFromLocStr, token, saveToLocStr, userAccount } =
     useContext(myContext);
-
+  console.log(userAccount);
   const passRef = useRef();
   function changePassword() {
     const newPassword = passRef.current.value;
@@ -47,7 +47,7 @@ const Account = () => {
           <ListGroup.Item>
             <h2>John Doe</h2>
           </ListGroup.Item>
-          <ListGroup.Item>{userMail}</ListGroup.Item>
+          <ListGroup.Item>{userAccount.email}</ListGroup.Item>
           <ListGroup.Item>
             <div>
               <h3>Change Password</h3>
