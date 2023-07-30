@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/3hrreactproject/static/css/main.559989bd.css",
-    "main.js": "/3hrreactproject/static/js/main.0c8624a6.js",
+    "main.js": "/3hrreactproject/static/js/main.a6678993.js",
     "index.html": "/3hrreactproject/index.html",
     "main.559989bd.css.map": "/3hrreactproject/static/css/main.559989bd.css.map",
-    "main.0c8624a6.js.map": "/3hrreactproject/static/js/main.0c8624a6.js.map"
+    "main.a6678993.js.map": "/3hrreactproject/static/js/main.a6678993.js.map"
   },
   "entrypoints": [
     "static/css/main.559989bd.css",
-    "static/js/main.0c8624a6.js"
+    "static/js/main.a6678993.js"
   ]
 }
