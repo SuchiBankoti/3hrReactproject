@@ -6,7 +6,6 @@ import CartItem from "./CartItem";
 export default function Cart() {
   const { cartItems, removeProductFromCart, clearCart, setShowCart } =
     useContext(myContext);
-  console.log(cartItems);
   return (
     <div className="cart">
       <h1 className="closecart" onClick={() => setShowCart(false)}>

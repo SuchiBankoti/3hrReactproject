@@ -37,10 +37,7 @@ function ContextDataProvider(props) {
           `${api}/data/${allUsersApi}/${userAccountKey}.json`
         );
         const accountData = await res.json();
-        console.log(accountData);
         if (accountData.cart) {
-          console.log("cart exists");
-          console.log(accountData.cart);
           const temp = accountData.cart;
           setCartItems(temp);
         }
@@ -122,9 +119,7 @@ function ContextDataProvider(props) {
 
   useEffect(() => {
     async function addCartItemTodataBase() {
-      if (cartItems.length > 0) {
-        console.log(cartItems);
-        console.log("add items to base");
+      // if (cartItems.length > 0) {
         const res = await fetch(
           `${api}/data/${allUsersApi}/${userAccountKey}.json`,
           {
@@ -138,14 +133,13 @@ function ContextDataProvider(props) {
           }
         );
         const data = await res.json();
-        console.log(data);
         setUserAccount((prev) => {
           return {
             ...prev,
             ...data,
           };
         });
-      }
+      // }
     }
     addCartItemTodataBase();
   }, [cartItems]);
@@ -163,7 +157,6 @@ function ContextDataProvider(props) {
       },
     });
     const key = await res.json();
-    console.log(key);
     localStorage.setItem("userAccountKey", key.name);
     setUserAccountKey(key.name);
   }

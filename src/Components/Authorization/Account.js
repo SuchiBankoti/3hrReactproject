@@ -8,7 +8,6 @@ const Account = () => {
   const passwordResetApi = process.env.REACT_APP_CHANGE_PASS_API_KEY;
   const { removeFromLocStr, token, saveToLocStr, userAccount } =
     useContext(myContext);
-  console.log(userAccount);
   const passRef = useRef();
   function changePassword() {
     const newPassword = passRef.current.value;

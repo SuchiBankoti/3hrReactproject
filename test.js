@@ -1,20 +1,34 @@
-const api =
-  "https://ecommerce-sharp-default-rtdb.asia-southeast1.firebasedatabase.app";
-const usersKey = "-NaPr2rDZVtIiNMh4mnf";
-const allUsersApi = `${api}/${usersKey}.json`;
-async function createNewUserAccount(mail) {
-  const res = await fetch(allUsersApi, {
-    method: "POST",
-    body: JSON.stringify({
-      email: mail,
-      cart: [],
-      orders: [],
-    }),
-    headers: {
-      "Content-type": "application/json",
-    },
-  });
-  const key = await res.json();
-  console.log(key.name);
+class Arrayy {
+  constructor(...arr) {
+    this.arr = arr;
+  }
+  map = (fn) => {
+    let temp = new Array(this.arr.length);
+    for (let i = 0; i < this.arr.length; i++) {
+      temp[i] = fn(this.arr[i], i);
+    }
+    return temp;
+  };
+  filter = (fn) => {
+    let count = 0;
+    let newArr = new Array(this.arr.length);
+    for (let i = 0; i < this.arr.length; i++) {
+      if (fn(this.arr[i])) {
+        newArr[count++] = this.arr[i];
+        // count++;
+      }
+    }
+    let temp = new Array(count);
+    for (let i = 0; i < temp.length; i++) {
+      temp[i] = newArr[i];
+    }
+    return temp;
+  };
 }
-createNewUserAccount("mononoko@gmail.com");
+const arr = new Arrayy(1, 2, 3);
+const result = arr.map((e) => {
+  return e + 1;
+});
+console.log(result);
+const filteredArr = arr.filter((e) => e !== 1);
+console.log(filteredArr);
